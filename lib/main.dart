@@ -57,10 +57,10 @@ class DetailPage extends StatefulWidget {
   final int daysInPast;
 
   @override
-  _DetailPageState createState() => _DetailPageState();
+  DetailPageState createState() => DetailPageState();
 }
 
-class _DetailPageState extends State<DetailPage> {
+class DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -110,10 +110,10 @@ class TrackingElement extends StatefulWidget {
   final int daysInPast;
 
   @override
-  _TrackingElementState createState() => _TrackingElementState();
+  TrackingElementState createState() => TrackingElementState();
 }
 
-class _TrackingElementState extends State<TrackingElement> {
+class TrackingElementState extends State<TrackingElement> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   int _counter = 0;

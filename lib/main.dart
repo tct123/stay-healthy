@@ -36,21 +36,22 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      body:  PageView(
-        controller: controller,
-        children: const [
-          DetailPage(headline: 'Heute', daysInPast: 0),
-          DetailPage(headline: 'Gestern', daysInPast: 1),
-          DetailPage(headline: 'Vorgestern', daysInPast: 2),
-      ],)
-      // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        body: PageView(
+      controller: controller,
+      children: const [
+        DetailPage(headline: 'Heute', daysInPast: 0),
+        DetailPage(headline: 'Gestern', daysInPast: 1),
+        DetailPage(headline: 'Vorgestern', daysInPast: 2),
+      ],
+    )
+        // This trailing comma makes auto-formatting nicer for build methods.
+        );
   }
 }
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({Key? key, required this.headline, required this.daysInPast}) : super(key: key);
+  const DetailPage({Key? key, required this.headline, required this.daysInPast})
+      : super(key: key);
 
   final String headline;
   final int daysInPast;
@@ -64,19 +65,43 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0.0, 48, 0.0, 32.0),
-      child: Column(children:  [
-        Text(widget.headline, style: const TextStyle(fontSize: 48.0, color: Colors.white)),
-        TrackingElement(color: const Color(0xFF8BEF11), iconData: Icons.directions_run, unit: 'm', max: 5000, daysInPast: widget.daysInPast),
-        TrackingElement(color: const Color(0xFF3B53EA), iconData: Icons.local_drink, unit: 'ml', max: 3000, daysInPast: widget.daysInPast),
-        TrackingElement(color: const Color(0xFFC42541), iconData: Icons.fastfood, unit: 'kcal', max: 1800, daysInPast: widget.daysInPast),
-      ],),
+      child: Column(
+        children: [
+          Text(widget.headline,
+              style: const TextStyle(fontSize: 48.0, color: Colors.white)),
+          TrackingElement(
+              color: const Color(0xFF8BEF11),
+              iconData: Icons.directions_run,
+              unit: 'm',
+              max: 5000,
+              daysInPast: widget.daysInPast),
+          TrackingElement(
+              color: const Color(0xFF3B53EA),
+              iconData: Icons.local_drink,
+              unit: 'ml',
+              max: 3000,
+              daysInPast: widget.daysInPast),
+          TrackingElement(
+              color: const Color(0xFFC42541),
+              iconData: Icons.fastfood,
+              unit: 'kcal',
+              max: 1800,
+              daysInPast: widget.daysInPast),
+        ],
+      ),
     );
   }
 }
 
-
 class TrackingElement extends StatefulWidget {
-  const TrackingElement({Key? key, required this.color, required this.iconData, required this.unit, required this.max, required this.daysInPast}) : super(key: key);
+  const TrackingElement(
+      {Key? key,
+      required this.color,
+      required this.iconData,
+      required this.unit,
+      required this.max,
+      required this.daysInPast})
+      : super(key: key);
 
   final Color color;
   final IconData iconData;
@@ -107,13 +132,14 @@ class _TrackingElementState extends State<TrackingElement> {
   @override
   void initState() {
     super.initState();
-    _storageKey = '${now.year}-${now.month}-${now.day - widget.daysInPast}_${widget.unit}';
+    _storageKey =
+        '${now.year}-${now.month}-${now.day - widget.daysInPast}_${widget.unit}';
   }
 
   @override
-  void didChangeDependencies(){
+  void didChangeDependencies() {
     super.didChangeDependencies();
-    _prefs.then( (prefs) {
+    _prefs.then((prefs) {
       setState(() {
         _counter = prefs.getInt(_storageKey) ?? 0;
         _progress = _counter / widget.max;
@@ -128,14 +154,20 @@ class _TrackingElementState extends State<TrackingElement> {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(32.0, 64.0, 32.0, 24.0),
-            child: Row(children: <Widget>[
-              Icon(widget.iconData, color: Colors.white70, size: 50,),
-              Text(
-                  '$_counter / ${widget.max.toInt()} ${widget.unit}',
-                  style: const TextStyle(color: Colors.white70, fontSize: 32)
-              ),
-            ],),
+            padding:
+                const EdgeInsetsDirectional.fromSTEB(32.0, 64.0, 32.0, 24.0),
+            child: Row(
+              children: <Widget>[
+                Icon(
+                  widget.iconData,
+                  color: Colors.white70,
+                  size: 50,
+                ),
+                Text('$_counter / ${widget.max.toInt()} ${widget.unit}',
+                    style:
+                        const TextStyle(color: Colors.white70, fontSize: 32)),
+              ],
+            ),
           ),
           LinearProgressIndicator(
             value: _progress,
@@ -144,6 +176,7 @@ class _TrackingElementState extends State<TrackingElement> {
             minHeight: 12.0,
           )
         ],
-      ),);
+      ),
+    );
   }
 }
